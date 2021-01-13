@@ -193,6 +193,58 @@ def build_bond_list(coordinates, max_bond=1.5, min_bond=0):
     return bonds
 
 
+def calculate_molecular_mass(symbols):
+    """Calculate the mass of a molecule.
+
+    Parameters
+    ----------
+    symbols : list
+        A list of elements.
+
+    Returns
+    -------
+    mass : float
+        The mass of the molecule
+    """
+    mass = 0
+    for atom in symbols:
+        mass += atomic_weights[atom]
+
+    return mass
+
+
+def calculate_center_of_mass(symbols, coordinates):
+    """Calculate the center of mass of a molecule.
+
+    The center of mass is weighted by each atom's weight.
+
+    Parameters
+    ----------
+    symbols : list
+        A list of elements for the molecule
+    coordinates : np.ndarray
+        The coordinates of the molecule.
+
+    Returns
+    -------
+    center_of_mass: np.ndarray
+        The center of mass of the molecule.
+
+    Notes
+    -----
+    The center of mass is calculated with the formula
+
+    .. math:: \\vec{R}=\\frac{1}{M} \\sum_{i=1}^{n} m_{i}\\vec{r_{}i}
+
+    """
+
+    M = calculate_molecular_mass(symbols)
+    weighted_r = np.array([0.0, 0.0, 0.0])
+    for q, atom in enumerate(symbols):
+        weighted_r += atomic_weights[atom] * coordinates[q]
+    return weighted_r / M
+
+
 atom_colors = {
     "H": "white",
     "C": "#D3D3D3",
