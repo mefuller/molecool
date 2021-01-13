@@ -5,6 +5,7 @@
 
 Welcome to molecool's documentation!
 =========================================================
+molecool is a training project as part of a workshop offered by MOLSSI
 
 .. toctree::
    :maxdepth: 2
